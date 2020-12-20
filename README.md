@@ -11,6 +11,7 @@ Stephen Lee, Armando Lopez, and Jose Sanrindo
 
 ## Getting Started
 ### Requirements
+* [React](https://reactjs.org/docs/getting-started.html)
 * [Gatsby CLI](https://www.npmjs.com/package/gatsby-cli)
 * [Yarn](https://yarnpkg.com/en/)
 
