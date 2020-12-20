@@ -43,6 +43,11 @@ const AboutPage = () => {
             Chart, Card, and Selection Reference
           </a>
         </p>
+        <p>
+          <a href="https://reactjs.org/docs/faq-ajax.html">
+            Code Reference for Fetching API
+          </a>
+        </p>
         <br></br>
         <h2>Created By</h2>
         <p>Stephen Lee, Armando Lopez, and Jose Sanrindo</p>
