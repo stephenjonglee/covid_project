@@ -48,6 +48,11 @@ const AboutPage = () => {
             Code Reference for Fetching API
           </a>
         </p>
+        <p>
+          <a href="https://plotly.com/javascript/">
+            Trend Graph made with Plotly
+          </a>
+        </p>
         <br></br>
         <h2>Created By</h2>
         <p>Stephen Lee, Armando Lopez, and Jose Sanrindo</p>
