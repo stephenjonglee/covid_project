@@ -26,49 +26,53 @@ const MapPage = () => {
     let response;
 
     try {
-      response = await axios.get('https://disease.sh/v3/covid-19/jhucsse/counties');
-    } catch(e) {
-      console.log(`Failed to fetch states: ${e.message}`, e);
+      response = await axios.get( 'https://disease.sh/v3/covid-19/jhucsse/counties' );
+    } catch ( e ) {
+      console.log( `Failed to fetch states: ${e.message}`, e );
       return;
     }
 
     const { data = [] } = response;
-    const hasData = Array.isArray(data) && data.length > 0;
+    const hasData = Array.isArray( data ) && data.length > 0;
 
     if ( !hasData ) return;
 
     var features = [];
 
-    for (var index in data) {
-      data[index]["stats"]["active"] = data[index]["stats"]["confirmed"] - data[index]["stats"]["deaths"] - data[index]["stats"]["recovered"];
+    for ( var index in data ) {
+      data[index]['stats']['active'] =
+        data[index]['stats']['confirmed'] - data[index]['stats']['deaths'] - data[index]['stats']['recovered'];
     }
 
-    for (var index in data) {
+    for ( index in data ) {
       features.push({
         type: 'Feature',
-        properties: {state: data[index]["province"], county: data[index]["county"],  confirmed: data[index]["stats"]["confirmed"],  active: data[index]["stats"]["active"], recovered:  data[index]["stats"]["recovered"], deaths:  data[index]["stats"]["deaths"]},
-        geometry: {type: "Point", coordinates: [ data[index]["coordinates"]["longitude"],  data[index]["coordinates"]["latitude"] ]}
+        properties: {
+          state: data[index]['province'],
+          county: data[index]['county'],
+          confirmed: data[index]['stats']['confirmed'],
+          active: data[index]['stats']['active'],
+          recovered: data[index]['stats']['recovered'],
+          deaths: data[index]['stats']['deaths'],
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [data[index]['coordinates']['longitude'], data[index]['coordinates']['latitude']],
+        },
       });
     }
 
     var geoJson = {
       type: 'FeatureCollection',
-      features: features
-    }
+      features: features,
+    };
 
-    const geoJsonLayers = new L.GeoJSON(geoJson, {
-      pointToLayer: (feature = {}, latlng) => {
+    const geoJsonLayers = new L.GeoJSON( geoJson, {
+      pointToLayer: ( feature = {}, latlng ) => {
         const { properties = {} } = feature;
-    
-        const {
-          state,
-          county,
-          confirmed,
-          active,
-          recovered,
-          deaths
-        } = properties;
-    
+
+        const { state, county, confirmed, active, recovered, deaths } = properties;
+
         const html = `
           <span class="icon-marker">
             <span class="icon-marker-tooltip">
@@ -83,18 +87,18 @@ const MapPage = () => {
             </span>
           </span>
         `;
-    
+
         return L.marker( latlng, {
           icon: L.divIcon({
             className: 'icon',
-            html
+            html,
           }),
-          riseOnHover: true
+          riseOnHover: true,
         });
-      }
+      },
     });
 
-    geoJsonLayers.addTo(map)
+    geoJsonLayers.addTo( map );
   }
 
   const mapSettings = {
@@ -114,7 +118,9 @@ const MapPage = () => {
         <h2>Corona Virus Tracker in the US Counties</h2>
         <p>You can interact with the map!</p>
         <p>
-          <Link to="/map">Go to Map of States</Link>
+          <Link class="button" to="/map">
+            Go to Map of States
+          </Link>
         </p>
       </Container>
 

@@ -26,26 +26,26 @@ const MapPage = () => {
     let response;
 
     try {
-      response = await axios.get('https://disease.sh/v3/covid-19/jhucsse/counties');
-    } catch(e) {
-      console.log(`Failed to fetch states: ${e.message}`, e);
+      response = await axios.get( 'https://disease.sh/v3/covid-19/jhucsse/counties' );
+    } catch ( e ) {
+      console.log( `Failed to fetch states: ${e.message}`, e );
       return;
     }
 
     const { data = [] } = response;
-    const hasData = Array.isArray(data) && data.length > 0;
+    const hasData = Array.isArray( data ) && data.length > 0;
 
     if ( !hasData ) return;
 
     var states = [];
     var latitude = [];
     var longitude = [];
-    for (var index in data) {
+    for ( var index in data ) {
       // check if the property/key is defined in the object itself, not in parent
-      if (!states.includes(data[index]["province"])) {
-        states.push(data[index]["province"]);
-        latitude.push(data[index]["coordinates"]["latitude"]);
-        longitude.push(data[index]["coordinates"]["longitude"]);
+      if ( !states.includes( data[index]['province'])) {
+        states.push( data[index]['province']);
+        latitude.push( data[index]['coordinates']['latitude']);
+        longitude.push( data[index]['coordinates']['longitude']);
       }
     }
 
@@ -54,54 +54,54 @@ const MapPage = () => {
     var deaths = [];
     var recovered = [];
 
-    for (var index in states) {
-      confirmed.push(0);
-      active.push(0);
-      deaths.push(0);
-      recovered.push(0);
+    for ( index in states ) {
+      confirmed.push( 0 );
+      active.push( 0 );
+      deaths.push( 0 );
+      recovered.push( 0 );
     }
 
-    for (var index in states) {
-      for (var key in data) {
-        if (states[index] === data[key]["province"]) {
-          confirmed[index] += data[key]["stats"]["confirmed"];
-          deaths[index] += data[key]["stats"]["deaths"];
-          recovered[index] += data[key]["stats"]["recovered"];
+    for ( index in states ) {
+      for ( var key in data ) {
+        if ( states[index] === data[key]['province']) {
+          confirmed[index] += data[key]['stats']['confirmed'];
+          deaths[index] += data[key]['stats']['deaths'];
+          recovered[index] += data[key]['stats']['recovered'];
         }
       }
     }
 
-    for (var index in active) {
+    for ( index in active ) {
       active[index] = confirmed[index] - deaths[index] - recovered[index];
     }
 
     var features = [];
 
-    for (var index in states) {
+    for ( index in states ) {
       features.push({
         type: 'Feature',
-        properties: {state: states[index], confirmed:  confirmed[index],  active: active[index], recovered:  recovered[index], deaths:  deaths[index]},
-        geometry: {type: "Point", coordinates: [ longitude[index],  latitude[index]]}
+        properties: {
+          state: states[index],
+          confirmed: confirmed[index],
+          active: active[index],
+          recovered: recovered[index],
+          deaths: deaths[index],
+        },
+        geometry: { type: 'Point', coordinates: [longitude[index], latitude[index]] },
       });
     }
 
     var geoJson = {
       type: 'FeatureCollection',
-      features: features
-    }
+      features: features,
+    };
 
-    const geoJsonLayers = new L.GeoJSON(geoJson, {
-      pointToLayer: (feature = {}, latlng) => {
+    const geoJsonLayers = new L.GeoJSON( geoJson, {
+      pointToLayer: ( feature = {}, latlng ) => {
         const { properties = {} } = feature;
-    
-        const {
-          state,
-          confirmed,
-          active,
-          recovered,
-          deaths
-        } = properties;
-    
+
+        const { state, confirmed, active, recovered, deaths } = properties;
+
         const html = `
           <span class="icon-marker">
             <span class="icon-marker-tooltip">
@@ -115,18 +115,18 @@ const MapPage = () => {
             </span>
           </span>
         `;
-    
+
         return L.marker( latlng, {
           icon: L.divIcon({
             className: 'icon',
-            html
+            html,
           }),
-          riseOnHover: true
+          riseOnHover: true,
         });
-      }
+      },
     });
 
-    geoJsonLayers.addTo(map)
+    geoJsonLayers.addTo( map );
   }
 
   const mapSettings = {
@@ -146,7 +146,9 @@ const MapPage = () => {
         <h2>Corona Virus Tracker in the United States</h2>
         <p>You can interact with the map!</p>
         <p>
-          <Link to="/map2">Go to Map of Counties</Link>
+          <Link class="button" to="/map2">
+            Go to Map of Counties
+          </Link>
         </p>
       </Container>
 

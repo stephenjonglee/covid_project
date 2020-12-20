@@ -21,11 +21,10 @@ const LinePage = () => {
         <p>Enjoy!</p>
         <br></br>
         <h2>Project Developed By:</h2>
-        <p>
-          Stephen Lee, Armando Lopez, and Jose Sanrindo
-        </p>
+        <p>Stephen Lee, Armando Lopez, and Jose Sanrindo</p>
       </Container>
-      <br></br><br></br>
+      <br></br>
+      <br></br>
       <Container type="content" className="text-center home-start">
         <Snippet>Github Repo: https://github.com/stephenjonglee/covid_project</Snippet>
       </Container>

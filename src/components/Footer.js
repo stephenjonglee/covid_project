@@ -5,9 +5,7 @@ const Footer = () => {
   return (
     <footer>
       <Container>
-        <p>
-          Developed by Stephen Lee, Armando Lopez, and Jose Sanrindo
-        </p>
+        <p>Developed by Stephen Lee, Armando Lopez, and Jose Sanrindo</p>
       </Container>
     </footer>
   );
