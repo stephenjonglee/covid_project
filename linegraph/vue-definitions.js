@@ -175,18 +175,18 @@ window.app = new Vue({
         let myScale = urlParameters.get('scale').toLowerCase();
 
         if (myScale == 'log') {
-          this.selectedScale = 'Logarithmic Scale';
+          this.selectedScale = 'Logarithmic';
         } else if (myScale == 'linear') {
-          this.selectedScale = 'Linear Scale';
+          this.selectedScale = 'Linear';
         }
       }
 
       if (urlParameters.has('data')) {
         let myData = urlParameters.get('data').toLowerCase();
         if (myData == 'cases') {
-          this.selectedData = 'Confirmed Cases';
+          this.selectedData = 'Confirmed';
         } else if (myData == 'deaths') {
-          this.selectedData = 'Reported Deaths';
+          this.selectedData = 'Deaths';
         }
 
       }
@@ -322,16 +322,16 @@ window.app = new Vue({
 
       if (selectedRegion != 'US') {
         let url;
-        if (selectedData == 'Confirmed Cases') {
+        if (selectedData == 'Confirmed') {
           url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
-        } else if (selectedData == 'Reported Deaths') {
+        } else if (selectedData == 'Deaths') {
           url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv';
         } else {
           return;
         }
         Plotly.d3.csv(url, (data) => this.processData(data, selectedRegion, updateSelectedCountries));
       } else { // selectedRegion == 'US'
-        const type = (selectedData == 'Reported Deaths') ? 'deaths' : 'cases';
+        const type = (selectedData == 'Deaths') ? 'deaths' : 'cases';
         const url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv';
         Plotly.d3.csv(url, (data) => this.processData(this.preprocessNYTData(data, type), selectedRegion, updateSelectedCountries));
       }
@@ -448,7 +448,7 @@ window.app = new Vue({
 
       // TODO: clean this logic up later
       // expected behavior: generate/overwrite selected locations if: 1. data loaded from URL, but no selected locations are loaded. 2. data refreshed (e.g. changing region)
-      // but do not overwrite selected locations if 1. selected locations loaded from URL. 2. We switch between confirmed cases <-> deaths
+      // but do not overwrite selected locations if 1. selected locations loaded from URL. 2. We switch between Confirmed <-> deaths
       if ((this.selectedCountries.length === 0 || !this.firstLoad) && updateSelectedCountries) {
         this.selectedCountries = this.countries.filter(e => topCountries.includes(e) || notableCountries.includes(e));
         
@@ -561,11 +561,11 @@ window.app = new Vue({
       
       let queryUrl = new URLSearchParams();
 
-      if (this.selectedScale == 'Linear Scale') {
+      if (this.selectedScale == 'Linear') {
         queryUrl.append('scale', 'linear');
       }
 
-      if (this.selectedData == 'Reported Deaths') {
+      if (this.selectedData == 'Deaths') {
         queryUrl.append('data', 'deaths');
       }
 
@@ -585,14 +585,14 @@ window.app = new Vue({
       }
 
       // check if no countries selected
-      // edge case: since selectedCountries may be larger than the country list (e.g. when switching from Confirmed Cases to Deaths), we can't simply check if selectedCountries is empty
+      // edge case: since selectedCountries may be larger than the country list (e.g. when switching from Confirmed to Deaths), we can't simply check if selectedCountries is empty
       // so instead we check if the countries list does not include any of the selected countries
       if (!this.countries.some(country => this.selectedCountries.includes(country))) {
         queryUrl.append('select', 'none');
       } 
 
       // check if all countries selected
-      // edge case: since selectedCountries may be larger than the country list (e.g. when switching from Confirmed Cases to Deaths), we can't simply compare array contents
+      // edge case: since selectedCountries may be larger than the country list (e.g. when switching from Confirmed to Deaths), we can't simply compare array contents
       // so instead we check if the countries list is a proper subset of selectedCountries
       else if (this.countries.every(country => this.selectedCountries.includes(country))) {
         queryUrl.append('select', 'all');
@@ -602,7 +602,7 @@ window.app = new Vue({
       else if (JSON.stringify(this.selectedCountries.sort()) !== JSON.stringify(this.defaultCountries)) {
 
         // only append to URL the selected countries that are also in the currently displayed country list
-        // this is done because of the edge case where selectedCountries may be larger than the country list (e.g. when switching from Confirmed Cases to Deaths)
+        // this is done because of the edge case where selectedCountries may be larger than the country list (e.g. when switching from Confirmed to Deaths)
         let countriesToAppendToUrl = this.selectedCountries.filter(e => this.countries.includes(e));
 
         // apply renames and append to queryUrl
@@ -686,17 +686,17 @@ window.app = new Vue({
         autorange: false,
         xaxis: {
           title: 'Total ' + this.selectedData,
-          type: this.selectedScale == 'Logarithmic Scale' ? 'log' : 'linear',
-          range: this.selectedScale == 'Logarithmic Scale' ? this.logxrange : this.linearxrange,
+          type: this.selectedScale == 'Logarithmic' ? 'log' : 'linear',
+          range: this.selectedScale == 'Logarithmic' ? this.logxrange : this.linearxrange,
           titlefont: {
             size: 24,
             color: 'rgba(254, 52, 110,1)'
           },
         },
         yaxis: {
-          title: 'New ' + this.selectedData + ' (in the Past Week)',
-          type: this.selectedScale == 'Logarithmic Scale' ? 'log' : 'linear',
-          range: this.selectedScale == 'Logarithmic Scale' ? this.logyrange : this.linearyrange,
+          title: this.selectedData + ' (Past Week)',
+          type: this.selectedScale == 'Logarithmic' ? 'log' : 'linear',
+          range: this.selectedScale == 'Logarithmic' ? this.logyrange : this.linearyrange,
           titlefont: {
             size: 24,
             color: 'rgba(254, 52, 110,1)'
@@ -856,7 +856,7 @@ window.app = new Vue({
 
     xAnnotation() {
 
-      if (this.selectedScale == 'Logarithmic Scale') {
+      if (this.selectedScale == 'Logarithmic') {
         let x = this.logyrange[1] - Math.log10(this.referenceLine(1));
         if (x < this.logxrange[1]) {
           return x;
@@ -875,7 +875,7 @@ window.app = new Vue({
     },
 
     yAnnotation() {
-      if (this.selectedScale == 'Logarithmic Scale') {
+      if (this.selectedScale == 'Logarithmic') {
         let x = this.logyrange[1] - Math.log10(this.referenceLine(1));
         if (x < this.logxrange[1]) {
           return this.logyrange[1];
@@ -899,13 +899,11 @@ window.app = new Vue({
 
     paused: true,
 
-    dataTypes: ['Confirmed Cases', 'Reported Deaths'],
+    dataTypes: ['Confirmed', 'Deaths'],
 
-    selectedData: 'Confirmed Cases',
+    selectedData: 'Confirmed',
 
-    regions: ['World', 'US', 'China', 'Australia', 'Canada'],
-
-    selectedRegion: 'World',
+    selectedRegion: 'US',
 
     sliderSelected: false,
 
@@ -913,9 +911,9 @@ window.app = new Vue({
 
     lookbackTime: 7,
 
-    scale: ['Logarithmic Scale', 'Linear Scale'],
+    scale: ['Logarithmic', 'Linear'],
 
-    selectedScale: 'Logarithmic Scale',
+    selectedScale: 'Logarithmic',
 
     minCasesInCountry: 50,
 

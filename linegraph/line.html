@@ -30,26 +30,13 @@
     <header>
 
         <div class="explainer">
-          <p>This interactive charts the <b><i>new</i></b> {{selectedData.toLowerCase()}} of COVID-19 in the past week vs. the <b><i>total</i></b> {{selectedData.toLowerCase()}} to date. When plotted in this way, exponential growth is represented as a straight line that slopes upwards. Notice that almost all countries follow a very similar path of exponential growth. <i>We're all in this together.</i> <span v-if="isHidden"><a @click="toggleHide">Learn more.</a></span></p>
-
-          <span v-if="!isHidden">
-
-            <p><i><b>Note:</b> The x-axis of this graph is not time</i>, but is instead the total number of cases or deaths.</p>
-
-            <p><b>Tips:</b> Press Space (or the play button) to Play/Pause. Press +/- keys (or drag the slider) to see daily changes. Hover over the graph for more info. Drag your mouse to zoom in, doubleclick to zoom back out. And don't forget to wash your hands!</p>
-
-            <a id="hide" @click="toggleHide">Hide</a>
-          </span>
+          <p>This is a timeline of COVID-19 confirmed cases or deaths in the past week vs. Total Confirmed or Deaths. You can play around with the parameters on the right.</p>
+          <p>Press Space (or the play button) to Play/Pause. Press +/- keys (or drag the slider) to see daily changes. Hover over the graph for more info. Drag your mouse to zoom in, doubleclick to zoom out.</p>
         </div>
 
         <div class="logowrapper">
 
-          <h1><a href="https://aatishb.com/covidtrends">Covid Trends</a></h1>
-
-          <div v-if="!isHidden" class="logos">
-            <a href="https://aatishb.com/" aria-label="Visit the website of Aatish Bhatia"><img src="logos/aatishb-bw.png" height="40" alt="Avatar of Aatish Bhatia"></a>
-            <a href="https://www.youtube.com/user/minutephysics" aria-label="Visit the Youtube channel of Minute Physics"><img src="logos/minutephysics-invert.png" height="40" alt="Minute Physics Logo"></a>
-          </div>
+          <h1>Covid Trends</h1>
 
         </div>
 
@@ -90,7 +77,7 @@
         <div v-if="!firstLoad && covidData.length != 0 && !countries.some(country => selectedCountries.includes(country))" class="nodata"><span>Please select some {{regionType.toLowerCase()}} to display.</span></div>
         
         <footer>
-          Created by Stephen Lee, Armando Lopez, and Jose Sanrindo. Stay safe!</a>
+          Developed by Stephen Lee, Armando Lopez, and Jose Sanrindo</a>
         </footer>
 
       </main>
@@ -98,20 +85,14 @@
       <aside>
 
         <div>
-          <h2>Customize</h2>
-          <label for="selectedData">Select Parameter</label>
+          <h2>Select Your Parameters:</h2>
+          <label for="selectedData">Data:</label>
           <select id="selectedData" v-model="selectedData" @mousedown="pause">
             <option v-for="d in dataTypes" v-bind:value="d">
               {{ d }}
             </option>
           </select>
-          <label for="selectedRegion">Select Region</label>
-          <select id="selectedRegion" v-model="selectedRegion" @mousedown="pause">
-            <option v-for="s in regions" v-bind:value="s">
-              {{ s }}
-            </option>
-          </select>
-          <label for="selectedScale">Select Scale</label>
+          <label for="selectedScale">Scale: </label>
           <select @change="createURL" id="selectedScale" v-model="selectedScale" @mousedown="pause">
             <option v-for="s in scale" v-bind:value="s">
               {{ s }}
@@ -131,18 +112,12 @@
 
         <div class="countries">
 
-          <h2>{{regionType}}</h2>
-
-          <div class="search">
-            <input id="searchField" v-model="searchField" placeholder="Search For A Location" aria-label="Search For A Location">
-          </div>
+          <h2>Select States:</h2>
 
           <div class="buttonwrapper">
             <button @click="deselectAll" aria-Label="Deselect All Regions">Deselect All</button>
             <button @click="selectAll" aria-Label="Select All Regions">Select All</button>
           </div>
-
-          <p style="padding-top: 1rem;">Showing {{regionType}} with at least {{minCasesInCountry}} {{selectedData}}</p>
 
           <ul>
             <li v-for="country in visibleCountries">

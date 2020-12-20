@@ -13,7 +13,7 @@ const LinePage = () => {
       </Helmet>
 
       <Container>
-        <Iframe url="https://aatishb.com/covidtrends/"
+        <Iframe url="http://127.0.0.1:5500/linegraph/line.html"
           width="100%"
           height="600px"
           id="myId"
