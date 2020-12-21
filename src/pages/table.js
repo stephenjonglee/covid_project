@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Layout from 'components/Layout';
 import Container from 'components/Container';
 import Snippet from 'components/Snippet';
+import TableApp from 'components/TableApp';
 
 const TablePage = () => {
   return (
@@ -13,15 +14,7 @@ const TablePage = () => {
       </Helmet>
 
       <Container type="content">
-        <h1>Welcome to our COVID19 Tracking Project!</h1>
-        <br></br>
-        <h2>Team SAJ</h2>
-        <p>This project tracks the progress of COVID19 in US.</p>
-        <p>You can navigate through our project with the navigation bar at the top.</p>
-        <p>Enjoy!</p>
-        <br></br>
-        <h2>Project Developed By:</h2>
-        <p>Stephen Lee, Armando Lopez, and Jose Sanrindo</p>
+        <TableApp></TableApp>
       </Container>
       <br></br>
       <br></br>
