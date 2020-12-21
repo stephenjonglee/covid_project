@@ -28,5 +28,3 @@ npm start
 * [Data API](https://corona.lmao.ninja/docs/#/p)
 * [Worldometer Data](https://www.worldometers.info/coronavirus/)
 * [John's Hopkins University Data](https://coronavirus.jhu.edu/)
-
-## File Directory
