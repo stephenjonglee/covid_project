@@ -4,9 +4,9 @@ import { Link } from 'gatsby';
 import Layout from 'components/Layout';
 import Container from 'components/Container';
 import Snippet from 'components/Snippet';
-import TableApp from 'components/TableApp';
+import CTableApp from 'components/CTableApp';
 
-const TablePage = () => {
+const CTablePage = () => {
   return (
     <Layout pageName="table">
       <Helmet>
@@ -14,13 +14,13 @@ const TablePage = () => {
       </Helmet>
 
       <Container type="content">
-        <h1>Table of US States</h1>
+        <h1>Table of LA County</h1>
         <p>
-          <Link class="button" to="/ctable">
-            Go to County Data
+          <Link class="button" to="/table">
+            Go to States Data
           </Link>
         </p>
-        <TableApp></TableApp>
+        <CTableApp></CTableApp>
       </Container>
       <br></br>
       <br></br>
@@ -31,4 +31,4 @@ const TablePage = () => {
   );
 };
 
-export default TablePage;
+export default CTablePage;

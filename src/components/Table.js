@@ -1,68 +1,41 @@
 import React from 'react';
-// import './_table.scss';
 
 const Table = ({ data }) => {
-  var mydata = data;
-
-  function sortTable(col) {
-    if (col === "state") {
-      mydata.sort(function(a, b) {
-        var stateA = a.state.toUpperCase(); // ignore upper and lowercase
-        var stateB = b.state.toUpperCase(); // ignore upper and lowercase
-        if (stateA < stateB) {
-          return -1;
-        }
-        if (stateA > stateB) {
-          return 1;
-        }
-      
-        // names must be equal
-        return 0;
-      });
-    } else if (col === "confirmed") {
-      mydata.sort(function(a, b) {
-        return -(a.cases - b.cases);
-      });
-    } else if (col === "active") {
-      mydata.sort(function(a, b) {
-        return -(a.active - b.active);
-      });
-    } else if (col === "recovered") {
-      mydata.sort(function(a, b) {
-        return -(a.recovered - b.recovered);
-      });
-    } else if (col === "deaths") {
-      mydata.sort(function(a, b) {
-        return -(a.deaths - b.deaths);
-      });
-    }
+  console.log("Data: ", data);
+  var confirm=0;
+  var active=0;
+  var recover=0;
+  var death=0;
+  for(var item in data) {
+    confirm += data[item]["cases"];
+    active+= data[item]["active"];
+    recover+= data[item]["recovered"];
+    death+= data[item]["deaths"];
   }
-  
+
   return (
     <table id="mytable">
-      <caption id="title">Table of US States</caption>
-      <caption id="sub">Click on column header to sort</caption>
       <thead>
         <tr>
-            <th onClick={() => sortTable("state")}>
+            <th>
               State&nbsp;&nbsp;
             </th>
-            <th onClick={() => sortTable("confirmed")}>
+            <th>
                 Confirmed
             </th>
-            <th onClick={() => sortTable("active")}>
+            <th>
                 Active
             </th>
-            <th onClick={() => sortTable("recovered")}>
+            <th>
                 Recovered
             </th>
-            <th onClick={() => sortTable("deaths")}>
+            <th>
                 Deaths
             </th>
         </tr>
       </thead>
       <tbody>
-          { mydata.map( (item, index) => {
+          { data.map( (item, index) => {
             return (
               <tr key={ index }>
                 <td>{ item.state }</td>
@@ -74,6 +47,13 @@ const Table = ({ data }) => {
             )
             })
           }
+            <tr>
+              <td>Total</td>
+              <td>{confirm}</td>
+              <td>{active}</td>
+              <td>{recover}</td>
+              <td>{death}</td>
+            </tr>
       </tbody>
     </table>
   );

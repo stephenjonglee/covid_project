@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Table from './Table.js';
+import CTable from './CTable.js';
 
-class TableApp extends Component {
+class CTableApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +12,7 @@ class TableApp extends Component {
   }
 
   componentDidMount() {
-    var url="https://disease.sh/v3/covid-19/states";
+    var url="https://disease.sh/v3/covid-19/jhucsse/counties/Los%20Angeles";
 
     fetch(url).then(res => res.json()).then(
         (result) => {
@@ -34,7 +34,7 @@ class TableApp extends Component {
   }
 
   render() {
-    const { error, isLoaded, data, c_data } = this.state;
+    const { error, isLoaded, data } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -43,7 +43,7 @@ class TableApp extends Component {
       return (
         <div className="TableApp">
           <div id = "table-containter">
-            <Table data={ data } />
+            <CTable data={ data } />
           </div>
         </div>
       );
@@ -51,4 +51,4 @@ class TableApp extends Component {
   }
 }
 
-export default TableApp;
+export default CTableApp;
