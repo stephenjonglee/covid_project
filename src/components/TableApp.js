@@ -34,7 +34,7 @@ class TableApp extends Component {
   }
 
   render() {
-    const { error, isLoaded, data, c_data } = this.state;
+    const { error, isLoaded, data } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
