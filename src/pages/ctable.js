@@ -14,7 +14,7 @@ const CTablePage = () => {
       </Helmet>
 
       <Container type="content">
-        <h1>Table of LA County</h1>
+        <h1>Table of US Counties</h1>
         <p>
           <Link class="button" to="/table">
             Go to States Data

@@ -30,6 +30,10 @@ const IndexPage = () => {
           Github Repo:{ ' ' }
           <a href="https://github.com/stephenjonglee/covid_project">https://github.com/stephenjonglee/covid_project</a>
         </Snippet>
+        <Snippet>
+          Our Trello:{ ' ' }
+          <a href="https://trello.com/b/rzR48IYC/covidproject">https://trello.com/b/rzR48IYC/covidproject</a>
+        </Snippet>
       </Container>
     </Layout>
   );

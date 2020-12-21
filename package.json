@@ -9,6 +9,7 @@
     "url": "https://twitter.com/colbyfayock"
   },
   "dependencies": {
+    "chart.js": "^2.9.4",
     "gatsby": "^2.25.3",
     "gatsby-plugin-manifest": "^2.5.2",
     "gatsby-plugin-react-helmet": "^3.4.0",
@@ -22,6 +23,7 @@
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
+    "react-chartjs-2": "^2.11.1",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.11.0",

@@ -4,7 +4,7 @@ import { Link } from 'gatsby';
 import Layout from 'components/Layout';
 import Container from 'components/Container';
 import Snippet from 'components/Snippet';
-import ChartApp from 'components/ChartApp';
+import CChartApp from 'components/CChartApp';
 
 const BarPage = () => {
   return (
@@ -15,12 +15,12 @@ const BarPage = () => {
 
       <h1>Bar Graphs of US States</h1>
       <p>
-        <Link class="button" to="/cbar">
+        <Link class="button" to="/bar">
           Go to County Data
         </Link>
       </p>
 
-      <ChartApp></ChartApp>
+      <CChartApp></CChartApp>
       <br></br>
       <br></br>
       <Container type="content" className="text-center home-start">

@@ -12,7 +12,7 @@ class CTableApp extends Component {
   }
 
   componentDidMount() {
-    var url="https://disease.sh/v3/covid-19/jhucsse/counties/Los%20Angeles";
+    var url="https://disease.sh/v3/covid-19/jhucsse/counties/";
 
     fetch(url).then(res => res.json()).then(
         (result) => {
