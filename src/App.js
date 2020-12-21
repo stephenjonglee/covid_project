@@ -11,8 +11,7 @@ class App extends React.Component {
           error: null,
           isLoaded: false,
           data: [],
-          selectedState: "california",
-          selectedStateData: []
+          countyData: []
         };
       }
 
@@ -30,9 +29,7 @@ class App extends React.Component {
                 data: result
             });
             },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
+
             (error) => {
             this.setState({
                 isLoaded: true,
@@ -40,21 +37,31 @@ class App extends React.Component {
             });
             }
         )
-
+  /*      
+        fetch("https://disease.sh/v3/covid-19/jhucsse/counties")
+        .then(res => res.json())
+        .then(
+            (result) => {
+            this.setState({
+                isLoaded: true,
+                countyData: result
+            });
+            },
+            (error) => {
+            this.setState({
+                isLoaded: true,
+                error
+            });
+            }
+        )
+*/
   }
 
-  handleStateChange = async(stateName) => {
-
-
-    const stateData = await fetchDataState(stateName);
-
-   this.setState({selectedStateData: stateData,selectedState:stateName})
-
-      }
-
-  
     render() { 
-        const { error, isLoaded, data, selectedState, selectedStateData } = this.state;
+        const { error, isLoaded, data, countyData} = this.state;
+        console.log(data);
+        console.log(countyData);
+        console.log(countyData[22]);
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -62,11 +69,17 @@ class App extends React.Component {
         } else {
             return(  
             <div  className={styles.container} >  
-                <img className={styles.image} src={coronaImage} alt="Covid-19"/>  
-                {/* <Cards data={data}/> 
-                <CountryPicker handleStateChange={this.handleStateChange}/>  */}
-            <StatePicker data={data}  handleStateChange={this.handleStateChange} /> 
-            <Charts data={selectedStateData} />
+
+            {/*STATE CUUMULATIVE*/}
+            <Charts data={data[0]} cu ="total" dataFull={data} />
+            {/*STATE EXAMPLES*/}
+            <Charts data={data[0]} cu = "state" dataFull = {data} />
+            <Charts data={data[1]} cu = "state" dataFull = {data} />
+            <Charts data={data[2]} cu = "state" dataFull = {data} />
+             {/*COUNTY EXAMPLES
+            <Charts data={countyData[22]} cu = "county" dataFull = {countyData} />*/}
+
+
             </div>
             )  
         }  
